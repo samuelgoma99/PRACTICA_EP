@@ -1,1 +1,1 @@
-# PRACTICA_EP
+# PRACTICA_EP realitzada per Àlex Escofet, Aleix Ràfols i Samuel Gomà
