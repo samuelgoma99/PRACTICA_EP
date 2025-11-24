@@ -1,0 +1,68 @@
+//CREAR BASE DE DADES
+
+CREATE DATABASE EP_PRA1;
+
+//CREAR TAULES
+
+CREATE TABLE HABITACIONS (
+    codi INT PRIMARY KEY,
+    tipus ENUM('SIMPLE','DOBLE','SUITE') NOT NULL,
+    preuNit INT,
+    descripcio VARCHAR(100)
+);
+
+CREATE TABLE USUARIS (
+    DNI INT PRIMARY KEY,
+    contrasenya VARCHAR(20) NOT NULL,
+    estat ENUM('NO AUTENTICAT','AUTENTICAT','BLOQUEJAT'),
+    numErrors INT,
+    tipus ENUM('ADMINISTRADOR','CLIENT')
+);
+
+CREATE TABLE CLIENTS (
+    DNI INT PRIMARY KEY,
+    nom VARCHAR(20) NOT NULL,
+    adreça VARCHAR(20) NOT NULL,
+    telefon INT,
+    email VARCHAR(20),
+    fotografia VARCHAR(100),
+    FOREIGN KEY (DNI) REFERENCES USUARIS(DNI)
+);
+
+CREATE TABLE RESERVES (
+    numReserva INT PRIMARY KEY,
+    codiHabitacio INT,
+    dniCliente INT,
+    dataEntrada DATE,
+    dataSortida DATE,
+    preuTotal INT,
+    estat ENUM('RESERVADA','OCUPADA','REALITZADA'),
+    FOREIGN KEY (codiHabitacio) REFERENCES HABITACIONS(codi),
+    FOREIGN KEY (dniCliente) REFERENCES CLIENTS(DNI)
+);
+
+//INSERIR CLIENT
+
+INSERT INTO EP_PRA1.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
+VALUES (12345678, 'contrasenya', 'AUTENTICAT', 0, 'CLIENT');
+
+INSERT INTO EP_PRA1.CLIENTS (DNI, nom, adreça, telefon, email, fotografia)
+VALUES (12345678, 'Adolf Mir', 'Carrer Major, 10', 600123456, 'lasss@email.com', 'meinkauf.jpg');
+
+
+//INSERIR ADMINISTRADOR
+
+INSERT INTO hotelDB.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
+VALUES (87654321, 'admin1', 'AUTENTICAT', 0, 'ADMINISTRADOR');
+
+//INSERIR HABITACIONS
+
+INSERT INTO hotelDB.HABITACIONS (codi, tipus, preuNit, descripcio)
+VALUES
+(1, 'SIMPLE', 50, 'Habitació per nit de passió'),
+(2, 'SIMPLE', 55, 'Habitació per festes'),
+(3, 'DOBLE', 80, 'Habitació per Perdro Sanchez'),
+(4, 'DOBLE', 85, 'Habitació doble amb vista al mar'),
+(5, 'SUITE', 150, 'Suite amb sala d’estar i bany gran'),
+(6, 'SUITE', 180, 'Suite presidencial amb terrassa');
+
