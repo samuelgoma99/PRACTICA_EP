@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title> GESTIÓ DEL HOTEL </title>
+</head>
+
+<body>
+    <center>
+        <h1>LLISTAT DE LES HABITACIONS DEL HOTEL<br></h1>
+        <br>
+
+        <?php
+            include_once("classes/control.php");
+            include_once("classes/vista.php"); 
+            $c = new control();
+            $llistat = $c->llistatHabitacions();
+            $v = new vista();
+            $v->mostrarLlistatSocis ($llistat, true);
+        ?>
+        <br>
+        <br><a href="index.html"> Tornar </a>
+    </center>
+</body>
+
+</html>
