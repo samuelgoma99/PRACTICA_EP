@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Registre Usuari</title>
+    </head>
+    <body>
+        <h1>Registre Usuari</h1>
+        <p>Introdueix les teves dades</p>
+        <form action="/php/get_register_info.php" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="dni">DNI:</label>
+                <input id="dni" size="9" maxlength="9" type="text" name="DNI" required/>
+            </div>
+          
+            <div>
+                <label for="dom">Domicili:</label>
+                <input id="dom" type="text" name="Adress" autocomplete="street-address" required/>
+            </div>
+
+            <div>
+                <label for="pass" >Contrasenya:</label>
+                <input id="pass" type="password" name="Password" required/>
+
+                <label for="rpass" >Contrasenya:</label>
+                <input id="rpass" type="password" name="Password_confirm" required/>
+            </div>
+            
+            <div>
+                <label for="tel">Telefon:</label>
+                <input id="tel" type="tel" name="Tel" autocomplete="tel"/>
+            </div>
+
+            <div>
+                <label for="mail">Email:</label>
+                <input id="mail" type="email" name="Email" autocomplete="email"/>
+            </div>
+
+            <div>
+                <label for="fot">Fotografia:</label>
+                <input id="fot" type="file" accept="image/" name="image"/>
+            </div>
+
+            <div>
+                <input type="submit" value="Registrarse"/>             
+            </div>
+        </form>
+    </body>
+</html>
