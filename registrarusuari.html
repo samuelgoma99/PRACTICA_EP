@@ -8,7 +8,7 @@
         <form action="/php/get_register_info.php" method="post" enctype="multipart/form-data">
             <div>
                 <label for="dni">DNI:</label>
-                <input id="dni" size="9" maxlength="9" type="text" name="DNI" required/>
+                <input id="dni" size="9" maxlength="9" type="text" name="DNI" required pattern="[0-9]{8}[A-Za-z]" required/>
             </div>
           
             <div>
@@ -45,3 +45,4 @@
         </form>
     </body>
 </html>
+
