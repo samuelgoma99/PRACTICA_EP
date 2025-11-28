@@ -45,36 +45,28 @@ class Vista
 
 
 
-    //Si el segon paràmetre és TRUE, mostrarà botons de radio per a triar una serie
-    public function mostrarLlistatSocis ($llistaSocis, $triar)
+ 
+    public function mostrarLlistatHabitacions ($llistatHabitacions)
     {
         $res="<table border=1><tr bgcolor='lightgray'>
-                            <th>DNI</th>
-                            <th>Nom</th>
-                            <th>Cognom</th>
-                            <th>Nivell</th>";
-        if ($triar)
-        {
-            $res = $res . "<th>Seleccionar</th>";
-        }
-        $res = $res . "</tr> ";
+                            <th>codi</th>
+                            <th>tipus</th>
+                            <th>preuNit</th>
+                            <th>descripcio</th>";
                         
         foreach ($llistaSocis as $soci)
         {
             $res = $res . "<tr>";
-            $DNI = $soci["DNI"];
-            $nom = $soci["nom"];
-            $cognoms = $soci["cognoms"];
-            $nivell = $soci["nivell"];
+            $codi = $habitacio["codi"];
+            $tipus = $habitacio["tipus"];
+            $preuNit = $habitacio["preuNit"];
+            $descripcio = $habitacio["descripcio"];
             
-            $res = $res . "<td>$DNI</td>";
-            $res = $res . "<td>$nom</td>";
-            $res = $res . "<td>$cognoms</td>";
-            $res = $res . "<td>$nivell</td>";
-            if ($triar)
-            {
-                $res = $res . "<td><input type='radio' name='DNI' value='$DNI'></td>";
-            }
+            $res = $res . "<td>$codi</td>";
+            $res = $res . "<td>$tipus</td>";
+            $res = $res . "<td>$preuNit</td>";
+            $res = $res . "<td>$descripcio</td>";
+            $res = $res . "</tr>";
         }
         $res = $res . "</table>";
         echo ($res);
