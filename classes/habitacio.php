@@ -30,7 +30,7 @@ class Habitacio
     {
         $res = array();
         $this->abd->connectarBD();
-        if ($this->abd->consultaSQL("SELECT codi, tipus, preuNit, descripcio FROM  where codi <> '0'"))
+        if ($this->abd->consultaSQL("SELECT codi, tipus, preuNit, descripcio FROM Habitacions where codi <> '0'"))
         {
             $fila = $this->abd->consultaFila();
             $i = 0;
