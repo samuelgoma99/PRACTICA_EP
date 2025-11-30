@@ -11,12 +11,12 @@
         <br>
 
         <?php
-            include_once("classes/control.php");
-            include_once("classes/vista.php"); 
-            $c = new control();
+            include_once("classes/Control.php");
+            include_once("classes/Vista.php"); 
+            $c = new Control();
             $llistat = $c->llistatHabitacions();
-            $v = new vista();
-            $v->mostrarLlistatSocis ($llistat, true);
+            $v = new Vista();
+            $v->mostrarLlistatHabitacions ($llistat);
         ?>
         <br>
         <br><a href="index.html"> Tornar </a>
