@@ -1,6 +1,6 @@
 -- CREAR BASE DE DADES
 
-CREATE DATABASE EP_PRA1;
+CREATE DATABASE Hotel;
 
 -- CREAR TAULES
 
@@ -43,21 +43,21 @@ CREATE TABLE RESERVES (
 
 -- INSERIR CLIENT
 
-INSERT INTO EP_PRA1.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
+INSERT INTO Hotel.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
 VALUES (12345678, 'contrasenya', 'AUTENTICAT', 0, 'CLIENT');
 
-INSERT INTO EP_PRA1.CLIENTS (DNI, nom, adreça, telefon, email, fotografia)
+INSERT INTO Hotel.CLIENTS (DNI, nom, adreça, telefon, email, fotografia)
 VALUES (12345678, 'Adolf Mir', 'Carrer Major, 10', 600123456, 'lasss@email.com', 'meinkauf.jpg');
 
 
 -- INSERIR ADMINISTRADOR
 
-INSERT INTO hotelDB.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
+INSERT INTO Hotel.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
 VALUES (87654321, 'admin1', 'AUTENTICAT', 0, 'ADMINISTRADOR');
 
 -- INSERIR HABITACIONS
 
-INSERT INTO hotelDB.HABITACIONS (codi, tipus, preuNit, descripcio)
+INSERT INTO Hotel.HABITACIONS (codi, tipus, preuNit, descripcio)
 VALUES
 (1, 'SIMPLE', 50, 'Habitació per nit de passió'),
 (2, 'SIMPLE', 55, 'Habitació per festes'),
