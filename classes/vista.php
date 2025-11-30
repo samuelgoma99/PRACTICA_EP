@@ -54,7 +54,7 @@ class Vista
                             <th>preuNit</th>
                             <th>descripcio</th>";
                         
-        foreach ($llistaSocis as $habitacio)
+        foreach ($llistatHabitacions as $habitacio)
         {
             $res = $res . "<tr>";
             $codi = $habitacio["codi"];
