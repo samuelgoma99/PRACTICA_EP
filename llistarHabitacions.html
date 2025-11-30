@@ -13,9 +13,9 @@
         <?php
             include_once("classes/control.php");
             include_once("classes/vista.php"); 
-            $c = new control();
+            $c = new Control();
             $llistat = $c->llistatHabitacions();
-            $v = new vista();
+            $v = new Vista();
             $v->mostrarLlistatHabitacions ($llistat);
         ?>
         <br>
