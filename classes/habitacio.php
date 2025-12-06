@@ -30,7 +30,9 @@ class Habitacio
     {
         $res = array();
         $this->abd->connectarBD();
-        if ($this->abd->consultaSQL("SELECT codi, tipus, preuNit, descripcio FROM Habitacions where codi <> '0'"))
+        $sql = "SELECT codi, tipus, preuNit, descripcio FROM habitacio WHERE codi <> '0'";
+    
+        if ($this->abd->consultaSQL($sql))
         {
             $fila = $this->abd->consultaFila();
             $i = 0;
@@ -46,9 +48,15 @@ class Habitacio
             }
             $this->abd->tancarConsulta();
         }
+        else
+        {
+            echo "Error en la consulta: " . $this->abd->missatgeError();
+        }
+    
         $this->abd->desconnectarBD();
         return $res; 
     }
+
 /*******************************************************************************/
 
    
