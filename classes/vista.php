@@ -44,32 +44,33 @@ class Vista
     }
 
 
-
- 
-    public function mostrarLlistatHabitacions ($llistatHabitacions)
+    public function mostrarLlistatHabitacions($llistatHabitacions)
     {
-        $res="<table border=1><tr bgcolor='lightgray'>
-                            <th>codi</th>
-                            <th>tipus</th>
-                            <th>preuNit</th>
-                            <th>descripcio</th>";
-                        
+        $res = "<table border=1>
+                    <tr bgcolor='lightgray'>
+                        <th>codi</th>
+                        <th>tipus</th>
+                        <th>preuNit</th>
+                        <th>descripcio</th>
+                    </tr>";
+
         foreach ($llistatHabitacions as $habitacio)
         {
-            $res = $res . "<tr>";
             $codi = $habitacio["codi"];
             $tipus = $habitacio["tipus"];
             $preuNit = $habitacio["preuNit"];
             $descripcio = $habitacio["descripcio"];
-            
-            $res = $res . "<td>$codi</td>";
-            $res = $res . "<td>$tipus</td>";
-            $res = $res . "<td>$preuNit</td>";
-            $res = $res . "<td>$descripcio</td>";
-            $res = $res . "</tr>";
+
+            $res .= "<tr>
+                        <td>$codi</td>
+                        <td>$tipus</td>
+                        <td>$preuNit</td>
+                        <td>$descripcio</td>
+                    </tr>";
         }
-        $res = $res . "</table>";
-        echo ($res);
+
+        $res .= "</table>";
+        echo $res;
     }
 
 /**************************************************************************************/
