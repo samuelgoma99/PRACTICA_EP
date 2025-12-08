@@ -1,13 +1,17 @@
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Inici de Sessio</title>
     </head>
     <body>
         <h1>Inici de Sessio</h1>
         <p>Introdueix les teves dades</p>
-        <form action="php/get_login_info.php" method="get"></form>
+        <form action="gestiovista.php" method="POST"> 
             DNI:<input size="9" maxlength="9" type="text" name="DNI" />
-            Paraula de pas:<input type="password" name="Password" />
-            <input type="submit" value="Iniciar Sessio"/>
+            Password:<input type="password" name="Password" />   
+            <input type="submit" name="opcio" value="Inici sessió" />
+        </form>
+        <br>
+        <a href="index.html">Tornar al menú principal</a><br>
     </body>
 </html>

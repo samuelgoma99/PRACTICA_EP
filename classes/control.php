@@ -3,6 +3,7 @@ header("Content-Type: text/html;charset=utf-8");
 
 //Classe de CONTROLADOR
 include_once ("habitacio.php");
+include_once ("usuari.php");
 
 class Control
 {
@@ -19,4 +20,12 @@ class Control
 		$res = $s->llistatHabitacions();
 		return($res);
 	}
+    public function iniciarSessio($DNI, $password)
+    {
+        $res = "";
+        $s = new Usuari($DNI);
+        $res = $s->iniciarSessio($DNI, $password);
+        return($res);
+    }
 }
+?>
