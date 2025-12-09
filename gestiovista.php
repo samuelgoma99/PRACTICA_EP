@@ -43,9 +43,11 @@ if (isset($_POST["opcio"]))
 			$password_confirm = $_POST['Password_confirm'] ?? '';
 			$tel = $_POST['Tel'] ?? '';
 			$email = $_POST['Email'] ?? '';
+			$foto = $_POST['foto'] ?? '';
+
 
 			$c = new Control();
-			$res = $c->registrarUsuari($DNI,$nom,$address, $password, $password_confirm, $tel, $email);
+			$res = $c->registrarUsuari($DNI,$nom,$address, $password, $password_confirm, $tel, $email, $foto);
 				
 			if ($res != ""){
 				$v->mostrarCapsalera('');

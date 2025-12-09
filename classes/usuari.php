@@ -177,7 +177,6 @@ class Usuari
         return($res);  // Retorna vacío si todo es correcto
     }
 
-
     function comprovarDadesObligatòries($DNI,$address,$password,$password_confirm){
         if (empty($DNI) || empty($address) || empty($password) || empty($password_confirm)) {
             return FALSE;
@@ -185,14 +184,12 @@ class Usuari
         return TRUE;
     }
 
-
     function validarContrasenya($password,$password_confirm){
         if ($password !== $password_confirm) {
             return FALSE;
         }
         return TRUE;
     }
-
 
     function validarDni($dni){
         if (!preg_match("/^[0-9]{8}[A-Za-z]$/", $dni)) {
@@ -215,7 +212,6 @@ class Usuari
         return TRUE;
     }
 
-
     public function inserirDadesUsuari($DNI, $password){
         $res = "";
         $this->abd->connectarBD();
@@ -237,10 +233,8 @@ class Usuari
         $this->abd->desconnectarBD();
         return $res;
     }
-
-
     
-    public function inserirDadesClient($DNI, $nom, $address, $tel, $email){
+    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto){
         $res = "";
         $this->abd->connectarBD();
         
@@ -250,8 +244,9 @@ class Usuari
             $address_escapat = $this->abd->escaparDada($address);
             $tel_escapat = $this->abd->escaparDada($tel);
             $email_escapat = $this->abd->escaparDada($email);
+            $foto_escapat = $this->abd->escaparDada($foto);
             
-            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat')";
+            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat','$foto_escapat')";
             
             if (!$this->abd->consultaSQL($sql_clients)) {
                 throw new Exception("Error al registrar dades del client: " . $this->abd->missatgeError());
@@ -264,6 +259,5 @@ class Usuari
         $this->abd->desconnectarBD();
         return $res;
     }
-
 }
 ?>

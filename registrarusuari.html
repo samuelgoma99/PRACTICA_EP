@@ -12,7 +12,7 @@
         <form action="gestiovista.php" method="post">
             <div>
                 <label for="dni">DNI</label>
-                <input id="dni" size="9" maxlength="9" type="text" name="DNI" required pattern="[0-9]{8}[A-Za-z]">
+                <input id="dni" size="9" maxlength="9" type="text" name="DNI">
             </div>
             
             <div>
@@ -43,6 +43,11 @@
                 <input id="mail" type="email" name="Email" autocomplete="email" placeholder="user@email.com">
             </div>
             
+            <div>
+                <label for="foto">Foto</label>
+                <input id="foto" type="text" name="foto" autocomplete="foto">
+            </div>
+
             <div>
                 <input type="submit" name="opcio" value="Registrar-se">
             </div>
