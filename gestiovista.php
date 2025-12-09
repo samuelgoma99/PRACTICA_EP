@@ -33,7 +33,7 @@ if (isset($_POST["opcio"]))
 			}
 			break;	
         }
-		case "Registrar-se"
+		case "Registrar-se":
 		{
 			// Recollida dades del formulari
 			$DNI = $_POST['DNI'] ?? '';
