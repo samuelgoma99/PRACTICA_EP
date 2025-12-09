@@ -36,7 +36,7 @@ class Control
     
         $res = $s->inserirDadesUsuari($DNI, $password);
         if ($res != "") return($res);
-        $res = $s->inserirDadesClient($DNI,$nom,$address, $password, $tel, $email, $foto);
+        $res = $s->inserirDadesClient($DNI,$nom,$address, $tel, $email, $foto);
         return($res);
     }
 }
