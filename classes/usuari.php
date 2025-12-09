@@ -234,11 +234,12 @@ class Usuari
         return $res;
     }
     
-    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto){
+    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto = ''){
         $res = "";
         $this->abd->connectarBD();
         
         try {
+            // Escapar datos para seguridad
             $dni_escapat = $this->abd->escaparDada($DNI);
             $nom_escapat = $this->abd->escaparDada($nom);
             $address_escapat = $this->abd->escaparDada($address);
@@ -246,8 +247,10 @@ class Usuari
             $email_escapat = $this->abd->escaparDada($email);
             $foto_escapat = $this->abd->escaparDada($foto);
             
-            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat','$foto_escapat')";
+            // SQL INSERT CON fotografia
+            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email, fotografia) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat', '$foto_escapat')";
             
+            // Ejecutar SQL
             if (!$this->abd->consultaSQL($sql_clients)) {
                 throw new Exception("Error al registrar dades del client: " . $this->abd->missatgeError());
             }
