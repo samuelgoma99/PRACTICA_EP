@@ -157,15 +157,15 @@ class Usuari
         }
         $vDni = $this->validarDni($dni);
         if ($vDni == FALSE){
-            return "El DNI es invalid"
+            return "El DNI es invalid";
         }
         $vTel = $this->validarTel($tel);
         if ($vTel == FALSE){
-            return "El telèfon ha de tenir 9 dígits"
+            return "El telèfon ha de tenir 9 dígits";
         }
         $vEmail = $this->validarEmail($email);
         if ($vEmail == FALSE){
-            return "El email no es valid"
+            return "El email no es valid";
         }
         return($res);
     }
@@ -244,7 +244,7 @@ class Usuari
         }
 
         $conexion->close();
-        return $res
+        return $res;
     }
 
 }
