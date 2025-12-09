@@ -5,7 +5,7 @@ USE Hotel;
 
 -- CREAR TAULES
 
-CREATE TABLE HABITACIONS (
+CREATE TABLE HABITACIO (
     codi INT PRIMARY KEY,
     tipus ENUM('SIMPLE','DOBLE','SUITE') NOT NULL,
     preuNit INT,
@@ -38,7 +38,7 @@ CREATE TABLE RESERVES (
     dataSortida DATE,
     preuTotal INT,
     estat ENUM('RESERVADA','OCUPADA','REALITZADA'),
-    FOREIGN KEY (codiHabitacio) REFERENCES HABITACIONS(codi),
+    FOREIGN KEY (codiHabitacio) REFERENCES HABITACIO(codi),
     FOREIGN KEY (dniCliente) REFERENCES CLIENTS(DNI)
 );
 
@@ -56,9 +56,9 @@ VALUES (12345678, 'Adolf Mir', 'Carrer Major, 10', 600123456, 'lasss@email.com',
 INSERT INTO Hotel.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
 VALUES (87654321, 'admin1', 'AUTENTICAT', 0, 'ADMINISTRADOR');
 
--- INSERIR HABITACIONS
+-- INSERIR HABITACIO
 
-INSERT INTO Hotel.HABITACIONS (codi, tipus, preuNit, descripcio)
+INSERT INTO Hotel.HABITACIO (codi, tipus, preuNit, descripcio)
 VALUES
 (1, 'SIMPLE', 50, 'Habitació per nit de passió'),
 (2, 'SIMPLE', 55, 'Habitació per festes'),
