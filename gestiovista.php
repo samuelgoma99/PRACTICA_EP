@@ -36,15 +36,14 @@ if (isset($_POST["opcio"]))
 		case "Registrar-se":
 		{
 			// Recollida dades del formulari
-			$DNI = $_POST['DNI'] ?? '';
-			$nom = $_POST['name'] ?? '';
-			$address = $_POST['Address'] ?? '';
-			$password = $_POST['Password'] ?? '';
-			$password_confirm = $_POST['Password_confirm'] ?? '';
-			$tel = $_POST['Tel'] ?? '';
-			$email = $_POST['Email'] ?? '';
-			$foto = $_POST['foto'] ?? '';
-
+			$DNI = isset($_POST['DNI']) ? $_POST['DNI'] : '';
+			$nom = isset($_POST['name']) ? $_POST['name'] : '';
+			$address = isset($_POST['Address']) ? $_POST['Address'] : '';
+			$password = isset($_POST['Password']) ? $_POST['Password'] : '';
+			$password_confirm = isset($_POST['Password_confirm']) ? $_POST['Password_confirm'] : '';
+			$tel = isset($_POST['Tel']) ? $_POST['Tel'] : '';
+			$email = isset($_POST['Email']) ? $_POST['Email'] : '';
+			$foto = isset($_POST['foto']) ? $_POST['foto'] : '';
 
 			$c = new Control();
 			$res = $c->registrarUsuari($DNI,$nom,$address, $password, $password_confirm, $tel, $email, $foto);
