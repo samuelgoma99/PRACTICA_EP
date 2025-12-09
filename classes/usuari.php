@@ -241,7 +241,7 @@ class Usuari
         return $res;
     }
     
-    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto = ''){
+    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto){
         $res = "";
         $this->abd->connectarBD();
         
