@@ -37,7 +37,7 @@ if (isset($_POST["opcio"]))
 		{
 			// Recollida dades del formulari
 			$DNI = $_POST['DNI'] ?? '';
-			$name = $_POST['name'] ?? '';
+			$nom = $_POST['name'] ?? '';
 			$address = $_POST['Address'] ?? '';
 			$password = $_POST['Password'] ?? '';
 			$password_confirm = $_POST['Password_confirm'] ?? '';
@@ -45,7 +45,7 @@ if (isset($_POST["opcio"]))
 			$email = $_POST['Email'] ?? '';
 
 			$c = new Control();
-			$res = $c->iniciarSessio($DNI, $Password);
+			$res = $c->registrarUsuari($DNI,$nom,$address, $password, $password_confirm, $tel, $email);
 				
 			if ($res != ""){
 				$v->mostrarCapsalera('');
@@ -56,7 +56,7 @@ if (isset($_POST["opcio"]))
 				$v->mostrarMissatge("Usuari registrat correctament");
 				$v->mostrarPeu();	
 			}
-
+			break;
 		}
     }
 }

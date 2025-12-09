@@ -141,113 +141,134 @@ class Usuari
 
     public function registrarUsuari($DNI,$address, $password, $password_confirm, $tel, $email){
         $res = "";
+        
         $existeix = $this->existeixUsuari($DNI);
         if ($existeix != FALSE)
         {
             return("L'usuari ja existeix");
         }
-        $emplenat = $this->comprovarDadesObligatòries($DNI,$address,$Password,$Password_confirm);
+        
+        $emplenat = $this->comprovarDadesObligatòries($DNI, $address, $password, $password_confirm);
         if ($emplenat == FALSE)
         {
             return("Falten dades obligatories");
         }
-        $vPass = $this->validarContrasenya($password,$password_confirm);
+        
+        $vPass = $this->validarContrasenya($password, $password_confirm);
         if ($vPass == FALSE){
             return "Les contrasenyes no coincideixen";
         }
-        $vDni = $this->validarDni($dni);
+        
+        $vDni = $this->validarDni($DNI);
         if ($vDni == FALSE){
             return "El DNI es invalid";
         }
+        
         $vTel = $this->validarTel($tel);
         if ($vTel == FALSE){
             return "El telèfon ha de tenir 9 dígits";
         }
+        
         $vEmail = $this->validarEmail($email);
         if ($vEmail == FALSE){
             return "El email no es valid";
         }
-        return($res);
+        
+        return($res);  // Retorna vacío si todo es correcto
     }
 
+
     function comprovarDadesObligatòries($DNI,$address,$password,$password_confirm){
-        if (empty($dni) || empty($address) || empty($password) || empty($password_confirm)) {
-            $res = FALSE;
+        if (empty($DNI) || empty($address) || empty($password) || empty($password_confirm)) {
+            return FALSE;
         }
-        return $res;
+        return TRUE;
     }
+
 
     function validarContrasenya($password,$password_confirm){
         if ($password !== $password_confirm) {
-            $res = FALSE;
+            return FALSE;
         }
-        return $res;
+        return TRUE;
     }
+
 
     function validarDni($dni){
         if (!preg_match("/^[0-9]{8}[A-Za-z]$/", $dni)) {
-            $res = FALSE;
+            return FALSE;
         }
-        return $res;     
+        return TRUE;
     }
 
     function validarTel($tel){
         if (!empty($tel) && !preg_match("/^[0-9]{9}$/", $tel)) {
-            $res = FALSE;
+            return FALSE;
         }
-        return $res;
+        return TRUE;
     }
 
     function validarEmail($email){
         if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $res = FALSE;
+            return FALSE;
         }
-        return $res;
+        return TRUE;
     }
 
+
     public function inserirDadesUsuari($DNI, $password){
-        $conexion->connectarBD();
+        $res = "";
+        $this->abd->connectarBD();
+        
         try {
             $sql_usuaris = "INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus) VALUES (?, ?, 'NO AUTENTICAT', 0, 'CLIENT')";
             
-            $stmt = $conexion->prepare($sql_usuaris);
-            $stmt->bind_param("is", $dni, $password);
-
+            $stmt = $this->abd->prepare($sql_usuaris);
+            
+            if (!$stmt) {
+                throw new Exception("Error en prepare: " . $this->abd->missatgeError());
+            }
+            
+            $stmt->bind_param("ss", $DNI, $password);
             if (!$stmt->execute()) {
                 throw new Exception("Error al registrar usuari: " . $stmt->error);
             }
             $stmt->close();
-        }catch (Exception $e) {
-            $conexion->rollback();
-            $error = $e->getMessage();
+            
+        } catch (Exception $e) {
+            $res = $e->getMessage();
         }
-
-        $conexion->desconnectarBD();
+        
+        $this->abd->desconnectarBD();
         return $res;
     }
+
     
-    public function inserirDadesClient($DNI,$nom,$address, $password, $tel, $email){
-        $conexion->connectarBD();
+    public function inserirDadesClient($DNI, $nom, $address, $tel, $email){
+        $res = "";
+        $this->abd->connectarBD();
+        
         try {
-            // INSERTAR EN CLIENTS
             $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES (?, ?, ?, ?, ?)";
             
-            $stmt2 = $conexion->prepare($DNI,$nom,$address, $password, $tel, $email);
-            $stmt2->bind_param("isssi", $DNI, $nom, $address, $tel, $email);
-
-            if (!$stmt2->execute()) {
-                throw new Exception("Error al registrar dades del client: " . $stmt2->error);
+            $stmt = $this->abd->prepare($sql_clients);
+            
+            if (!$stmt) {
+                throw new Exception("Error en prepare: " . $this->abd->missatgeError());
             }
-            $stmt2->close(); 
-            $conexion->begin_transaction();
-        }catch (Exception $e) {
-            $conexion->rollback();
-            return $e->getMessage();
+            
+            $stmt->bind_param("ssssi", $DNI, $nom, $address, $tel, $email);
+            if (!$stmt->execute()) {
+                throw new Exception("Error al registrar dades del client: " . $stmt->error);
+            }
+            $stmt->close();
+            
+        } catch (Exception $e) {
+            $res = $e->getMessage();
         }
-
-        $conexion->desconnectarBD();
+        
+        $this->abd->desconnectarBD();
         return $res;
     }
-
 }
 ?>
