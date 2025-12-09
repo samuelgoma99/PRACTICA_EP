@@ -206,7 +206,7 @@ class Usuari
     }
 
     public function inserirDadesUsuari($DNI, $password){
-        $conexion->begin_transaction();
+        $conexion->connectarBD();
         try {
             $sql_usuaris = "INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus) VALUES (?, ?, 'NO AUTENTICAT', 0, 'CLIENT')";
             
@@ -222,10 +222,12 @@ class Usuari
             $error = $e->getMessage();
         }
 
-        $conexion->close();
+        $conexion->desconnectarBD();
+        return $res;
     }
     
     public function inserirDadesClient($DNI,$nom,$address, $password, $tel, $email){
+        $conexion->connectarBD();
         try {
             // INSERTAR EN CLIENTS
             $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES (?, ?, ?, ?, ?)";
@@ -243,7 +245,7 @@ class Usuari
             return $e->getMessage();
         }
 
-        $conexion->close();
+        $conexion->desconnectarBD();
         return $res;
     }
 
