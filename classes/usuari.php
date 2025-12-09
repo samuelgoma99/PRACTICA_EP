@@ -221,27 +221,23 @@ class Usuari
         $this->abd->connectarBD();
         
         try {
-            $sql_usuaris = "INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus) VALUES (?, ?, 'NO AUTENTICAT', 0, 'CLIENT')";
+            $dni_escapat = $this->abd->escaparDada($DNI);
+            $password_escapat = $this->abd->escaparDada($password);
             
-            $stmt = $this->abd->prepare($sql_usuaris);
+            $sql_usuaris = "INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus) VALUES ('$dni_escapat', '$password_escapat', 'NO AUTENTICAT', 0, 'CLIENT')";
             
-            if (!$stmt) {
-                throw new Exception("Error en prepare: " . $this->abd->missatgeError());
+            if (!$this->abd->consultaSQL($sql_usuaris)) {
+                throw new Exception("Error al registrar usuari: " . $this->abd->missatgeError());
             }
-            
-            $stmt->bind_param("ss", $DNI, $password);
-            if (!$stmt->execute()) {
-                throw new Exception("Error al registrar usuari: " . $stmt->error);
-            }
-            $stmt->close();
             
         } catch (Exception $e) {
             $res = $e->getMessage();
         }
-        
+
         $this->abd->desconnectarBD();
         return $res;
     }
+
 
     
     public function inserirDadesClient($DNI, $nom, $address, $tel, $email){
@@ -249,26 +245,25 @@ class Usuari
         $this->abd->connectarBD();
         
         try {
-            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES (?, ?, ?, ?, ?)";
+            $dni_escapat = $this->abd->escaparDada($DNI);
+            $nom_escapat = $this->abd->escaparDada($nom);
+            $address_escapat = $this->abd->escaparDada($address);
+            $tel_escapat = $this->abd->escaparDada($tel);
+            $email_escapat = $this->abd->escaparDada($email);
             
-            $stmt = $this->abd->prepare($sql_clients);
+            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat')";
             
-            if (!$stmt) {
-                throw new Exception("Error en prepare: " . $this->abd->missatgeError());
+            if (!$this->abd->consultaSQL($sql_clients)) {
+                throw new Exception("Error al registrar dades del client: " . $this->abd->missatgeError());
             }
-            
-            $stmt->bind_param("ssssi", $DNI, $nom, $address, $tel, $email);
-            if (!$stmt->execute()) {
-                throw new Exception("Error al registrar dades del client: " . $stmt->error);
-            }
-            $stmt->close();
             
         } catch (Exception $e) {
             $res = $e->getMessage();
         }
-        
+
         $this->abd->desconnectarBD();
         return $res;
     }
+
 }
 ?>
