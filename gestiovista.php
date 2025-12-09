@@ -18,12 +18,20 @@ if (isset($_POST["opcio"]))
 				$Password = $_POST["Password"];	
 				
 				$c = new Control();
-				$res = $c->iniciarSessio($DNI, $Password);
+				$res = $c->iniciarSessio($DNI, $Password); // rebrà un string amb el tipus o un string amb l'error
 				
-                # Això segurament s'ha de canviar
-				$v->mostrarCapsalera('');
-				$v->mostrarMissatge($res);
-				$v->mostrarPeu();
+				if ($res == "ADMINISTRADOR")
+				{
+					include_once("sessioIniciadaAdmin.html");
+				} else if ($res == "CLIENT")
+				{
+					include_once("sessioIniciadaClient.html");
+				}
+				else{
+					$v->mostrarCapsalera("");
+					$v->mostrarError($res);
+					$v->mostrarPeu();
+				}
 			}
 			else
 			{

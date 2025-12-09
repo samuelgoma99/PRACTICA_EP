@@ -54,7 +54,7 @@ VALUES
 
 -- INSERIR HABITACIO
 
-INSERT INTO HABITACIO (codi, tipus, preuNit, descripcio)
+INSERT INTO Hotel.HABITACIO (codi, tipus, preuNit, descripcio)
 VALUES
 (1, 'SIMPLE', 50, 'Habitació per nit de passió'),
 (2, 'SIMPLE', 55, 'Habitació per festes'),

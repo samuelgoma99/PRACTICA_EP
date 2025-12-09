@@ -16,19 +16,7 @@ class Usuari
     function __construct($DNI = null)
     {
         $this->abd = new TAccesbd(); 
-        $this->numErrors=0;
-
-        # REVISAR!
-        if ($DNI != null) {
-            $this->DNI = $DNI;
-            $this->abd->connectarBD();
-            $SQL = "select numErrors from usuaris where DNI = '$DNI'";
-            $valor = $this->abd->consultaUnica($SQL);
-            if ($valor !== null) {
-                $this->numErrors = $valor;
-            }
-        }
-    
+        $this->numErrors=$this->getNumErrors($DNI); // No m'agrada
     }
 
     function __destruct()
@@ -45,12 +33,12 @@ class Usuari
         $existeix = $this->existeixUsuari($DNI);
         if ($existeix == FALSE)
         {
-            return("L'usuari NO existeix");
+            return("ERROR: L'usuari NO existeix");
         }
         $bloquejat = $this->usuariBloquejat($DNI);
         if ($bloquejat == TRUE) 
         {
-            return("L'usuari està bloquejat");
+            return("ERROR: L'usuari està bloquejat");
         }
         $credencialsCoindiexen = $this->comprovarCredencials($DNI, $password);
         if ($credencialsCoindiexen == FALSE)
@@ -63,7 +51,7 @@ class Usuari
             } else 
             {
                 $this->canviarEstatUsuari($DNI, "Bloquejat");
-                return ("ERROR: Usuari bloquejat");
+                return("ERROR: L'usuari està bloquejat");
             }
         }
         $this->reiniciarErrorsLogin($DNI);
@@ -73,13 +61,13 @@ class Usuari
 
     }
 
-    // SUB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    function existeixUsuari($DNI)
+    public function existeixUsuari($DNI)
     {
         $res = FALSE;
         $this->abd->connectarBD();
         $SQL = "select count(*) from usuaris where DNI = '$DNI'";
         $res = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
@@ -89,6 +77,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select numErrors from usuaris where DNI = '$DNI'";
         $numErrors = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         $res = ($numErrors >= 3);
         return($res);
 
@@ -100,6 +89,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select count(*) from usuaris where DNI = '$DNI' and contrasenya = '$password'";
         $count = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         $res = ($count == 1);
         return $res;
     }
@@ -107,24 +97,40 @@ class Usuari
     function incrementarErrorsLogin($DNI)
     {
         $res = FALSE;
+        $numErrors = $this->getNumErrors($DNI) + 1;
         $this->abd->connectarBD();
-        $numErrors = $this->numErrors;
         $SQL = "update usuaris set numErrors = '$numErrors' where DNI = '$DNI'";
         $res = $this->abd->consultaSQL($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
-    // SUB!!!!!!!!!!!!!!!!!!!!!
-    function canviarEstatUsuari($DNI, $nouEstat) 
+    function getNumErrors($DNI) 
     {
-        $res = TRUE;
+        $this->abd->connectarBD();
+        $SQL = "select numErrors from usuaris where DNI = '$DNI'";
+        $valor = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
+        return $valor;
+    }
+
+    public function canviarEstatUsuari($DNI, $nouEstat) 
+    {
+        $res = FALSE;
+        $this->abd->connectarBD();
+        $SQL = "update usuaris set estat = '$nouEstat' where DNI = '$DNI'";
+        $res = $this->abd->consultaSQL($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
-    // SUB !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    function reiniciarErrorsLogin($DNI) 
+    public function reiniciarErrorsLogin($DNI) 
     {
-        $res = TRUE;
+        $res = FALSE;
+        $this->abd->connectarBD();
+        $SQL = "update usuaris set numErrors = 0 where DNI = '$DNI'";
+        $res = $this->abd->consultaSQL($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
@@ -132,8 +138,9 @@ class Usuari
     {
         $res = FALSE;
         $this->abd->connectarBD();
-        $SQL = "select tipus from clients where DNI = '$DNI'";
+        $SQL = "select tipus from usuaris where DNI = '$DNI'";
         $res = $this->abd->consultaUnica($SQL);
+        $this->abd->desconnectarBD();
         return $res;
     }
 
