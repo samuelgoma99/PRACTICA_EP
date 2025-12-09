@@ -17,18 +17,6 @@ class Usuari
     {
         $this->abd = new TAccesbd(); 
         $this->numErrors=0;
-
-        # REVISAR!
-        if ($DNI != null) {
-            $this->DNI = $DNI;
-            $this->abd->connectarBD();
-            $SQL = "select numErrors from usuaris where DNI = '$DNI'";
-            $valor = $this->abd->consultaUnica($SQL);
-            if ($valor !== null) {
-                $this->numErrors = $valor;
-            }
-        }
-    
     }
 
     function __destruct()
@@ -80,6 +68,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select count(*) from usuaris where DNI = '$DNI'";
         $res = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
@@ -89,6 +78,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select numErrors from usuaris where DNI = '$DNI'";
         $numErrors = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         $res = ($numErrors >= 3);
         return($res);
 
@@ -100,6 +90,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select count(*) from usuaris where DNI = '$DNI' and contrasenya = '$password'";
         $count = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         $res = ($count == 1);
         return $res;
     }
@@ -107,11 +98,21 @@ class Usuari
     function incrementarErrorsLogin($DNI)
     {
         $res = FALSE;
+        $numErrors = $this->getNumErrors($DNI);
         $this->abd->connectarBD();
-        $numErrors = $this->numErrors;
         $SQL = "update usuaris set numErrors = '$numErrors' where DNI = '$DNI'";
         $res = $this->abd->consultaSQL($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
+    }
+
+    function getNumErrors($DNI) 
+    {
+        $this->abd->connectarBD();
+        $SQL = "select numErrors from usuaris where DNI = '$DNI'";
+        $valor = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
+        return $valor;
     }
 
     // SUB!!!!!!!!!!!!!!!!!!!!!
@@ -124,7 +125,11 @@ class Usuari
     // SUB !!!!!!!!!!!!!!!!!!!!!!!!!!!!
     function reiniciarErrorsLogin($DNI) 
     {
-        $res = TRUE;
+        $res = FALSE;
+        $this->abd->connectarBD();
+        $SQL = "update usuaris set numErrors = 0 where DNI = '$DNI'";
+        $res = $this->abd->consultaSQL($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 
@@ -134,6 +139,7 @@ class Usuari
         $this->abd->connectarBD();
         $SQL = "select tipus from clients where DNI = '$DNI'";
         $res = $this->abd->consultaUnica($SQL);
+        $this->abd-> desconnectarBD();
         return $res;
     }
 }
