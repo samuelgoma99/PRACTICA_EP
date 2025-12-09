@@ -32,7 +32,32 @@ if (isset($_POST["opcio"]))
 				$v->mostrarPeu();
 			}
 			break;	
-        }	
+        }
+		case "Registrar-se"
+		{
+			// Recollida dades del formulari
+			$DNI = $_POST['DNI'] ?? '';
+			$name = $_POST['name'] ?? '';
+			$address = $_POST['Address'] ?? '';
+			$password = $_POST['Password'] ?? '';
+			$password_confirm = $_POST['Password_confirm'] ?? '';
+			$tel = $_POST['Tel'] ?? '';
+			$email = $_POST['Email'] ?? '';
+
+			$c = new Control();
+			$res = $c->iniciarSessio($DNI, $Password);
+				
+			if ($res != ""){
+				$v->mostrarCapsalera('');
+				$v->mostrarMissatge($res);
+				$v->mostrarPeu();				
+			}else{
+				$v->mostrarCapsalera('');
+				$v->mostrarMissatge("Usuari registrat correctament");
+				$v->mostrarPeu();	
+			}
+
+		}
     }
 }
 ?>

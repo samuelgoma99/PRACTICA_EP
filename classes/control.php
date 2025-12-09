@@ -27,5 +27,17 @@ class Control
         $res = $s->iniciarSessio($DNI, $password);
         return($res);
     }
+    public function registrarUsuari($DNI,$address, $password, $password_confirm, $tel, $email){
+        $res = "";
+        $s = new Usuari($DNI);
+        $res = $s->registrarUsuari($DNI,$address, $password, $password_confirm, $tel, $email);
+        if ($res != "") return($res);
+        
+    
+        $res = $s->inserirDadesClient();
+        if ($res != "") return($res);
+        $res = $s->inserirDadesClient();
+        return($res);
+    }
 }
 ?>
