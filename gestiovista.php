@@ -40,7 +40,33 @@ if (isset($_POST["opcio"]))
 				$v->mostrarPeu();
 			}
 			break;	
-        }	
+        }
+		case "Registrar-se":
+		{
+			// Recollida dades del formulari
+			$DNI = isset($_POST['DNI']) ? $_POST['DNI'] : '';
+			$nom = isset($_POST['name']) ? $_POST['name'] : '';
+			$address = isset($_POST['Address']) ? $_POST['Address'] : '';
+			$password = isset($_POST['Password']) ? $_POST['Password'] : '';
+			$password_confirm = isset($_POST['Password_confirm']) ? $_POST['Password_confirm'] : '';
+			$tel = isset($_POST['Tel']) ? $_POST['Tel'] : '';
+			$email = isset($_POST['Email']) ? $_POST['Email'] : '';
+			$foto = isset($_POST['foto']) ? $_POST['foto'] : '';
+
+			$c = new Control();
+			$res = $c->registrarUsuari($DNI,$nom,$address, $password, $password_confirm, $tel, $email, $foto);
+				
+			if ($res != ""){
+				$v->mostrarCapsalera('');
+				$v->mostrarMissatge($res);
+				$v->mostrarPeu();				
+			}else{
+				$v->mostrarCapsalera('');
+				$v->mostrarMissatge("Usuari registrat correctament");
+				$v->mostrarPeu();	
+			}
+			break;
+		}
     }
 }
 ?>

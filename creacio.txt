@@ -1,5 +1,4 @@
 -- CREAR BASE DE DADES
-
 CREATE DATABASE Hotel;
 USE Hotel;
 
@@ -13,7 +12,7 @@ CREATE TABLE HABITACIO (
 );
 
 CREATE TABLE USUARIS (
-    DNI INT PRIMARY KEY,
+    DNI VARCHAR(10) PRIMARY KEY,  -- DNI como clave primaria
     contrasenya VARCHAR(20) NOT NULL,
     estat ENUM('NO AUTENTICAT','AUTENTICAT','BLOQUEJAT'),
     numErrors INT,
@@ -21,11 +20,11 @@ CREATE TABLE USUARIS (
 );
 
 CREATE TABLE CLIENTS (
-    DNI INT PRIMARY KEY,
-    nom VARCHAR(20) NOT NULL,
-    adreça VARCHAR(20) NOT NULL,
-    telefon INT,
-    email VARCHAR(20),
+    DNI VARCHAR(10) PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL,
+    adreça VARCHAR(50) NOT NULL,
+    telefon VARCHAR(15),
+    email VARCHAR(100),
     fotografia VARCHAR(100),
     FOREIGN KEY (DNI) REFERENCES USUARIS(DNI)
 );
@@ -33,7 +32,7 @@ CREATE TABLE CLIENTS (
 CREATE TABLE RESERVES (
     numReserva INT PRIMARY KEY,
     codiHabitacio INT,
-    dniCliente INT,
+    dniCliente VARCHAR(10),
     dataEntrada DATE,
     dataSortida DATE,
     preuTotal INT,
@@ -42,19 +41,16 @@ CREATE TABLE RESERVES (
     FOREIGN KEY (dniCliente) REFERENCES CLIENTS(DNI)
 );
 
--- INSERIR CLIENT
+-- INSERIR CLIENTS I USUARIS
 
-INSERT INTO Hotel.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
-VALUES (12345678, 'contrasenya', 'AUTENTICAT', 0, 'CLIENT');
+INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus)
+VALUES 
+('12345678', 'contrasenya', 'AUTENTICAT', 0, 'CLIENT'),
+('87654321', 'admin1', 'AUTENTICAT', 0, 'ADMINISTRADOR');
 
-INSERT INTO Hotel.CLIENTS (DNI, nom, adreça, telefon, email, fotografia)
-VALUES (12345678, 'Adolf Mir', 'Carrer Major, 10', 600123456, 'lasss@email.com', 'meinkauf.jpg');
-
-
--- INSERIR ADMINISTRADOR
-
-INSERT INTO Hotel.USUARIS (DNI, contrasenya, estat, numErrors, tipus)
-VALUES (87654321, 'admin1', 'AUTENTICAT', 0, 'ADMINISTRADOR');
+INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email, fotografia)
+VALUES 
+('12345678', 'Adolf Mir', 'Carrer Major, 10', '600123456', 'lasss@email.com', 'meinkauf.jpg');
 
 -- INSERIR HABITACIO
 
@@ -66,4 +62,3 @@ VALUES
 (4, 'DOBLE', 85, 'Habitació doble amb vista al mar'),
 (5, 'SUITE', 150, 'Suite amb sala d’estar i bany gran'),
 (6, 'SUITE', 180, 'Suite presidencial amb terrassa');
-

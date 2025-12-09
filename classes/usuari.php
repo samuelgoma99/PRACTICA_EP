@@ -143,5 +143,131 @@ class Usuari
         $this->abd->desconnectarBD();
         return $res;
     }
+
+        // Registre ------------------------------
+
+    public function registrarUsuari($DNI,$address, $password, $password_confirm, $tel, $email){
+        $res = "";
+        
+        $existeix = $this->existeixUsuari($DNI);
+        if ($existeix != FALSE)
+        {
+            return("L'usuari ja existeix");
+        }
+        
+        $emplenat = $this->comprovarDadesObligatòries($DNI, $address, $password, $password_confirm);
+        if ($emplenat == FALSE)
+        {
+            return("Falten dades obligatories");
+        }
+        
+        $vPass = $this->validarContrasenya($password, $password_confirm);
+        if ($vPass == FALSE){
+            return "Les contrasenyes no coincideixen";
+        }
+        
+        $vDni = $this->validarDni($DNI);
+        if ($vDni == FALSE){
+            return "El DNI es invalid";
+        }
+        
+        $vTel = $this->validarTel($tel);
+        if ($vTel == FALSE){
+            return "El telèfon ha de tenir 9 dígits";
+        }
+        
+        $vEmail = $this->validarEmail($email);
+        if ($vEmail == FALSE){
+            return "El email no es valid";
+        }
+        
+        return($res);  // Retorna vacío si todo es correcto
+    }
+
+    function comprovarDadesObligatòries($DNI,$address,$password,$password_confirm){
+        if (empty($DNI) || empty($address) || empty($password) || empty($password_confirm)) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function validarContrasenya($password,$password_confirm){
+        if ($password !== $password_confirm) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function validarDni($dni){
+        if (!preg_match("/^[0-9]{8}[A-Za-z]$/", $dni)) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function validarTel($tel){
+        if (!empty($tel) && !preg_match("/^[0-9]{9}$/", $tel)) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function validarEmail($email){
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function inserirDadesUsuari($DNI, $password){
+        $res = "";
+        $this->abd->connectarBD();
+        
+        try {
+            $dni_escapat = $this->abd->escaparDada($DNI);
+            $password_escapat = $this->abd->escaparDada($password);
+            
+            $sql_usuaris = "INSERT INTO USUARIS (DNI, contrasenya, estat, numErrors, tipus) VALUES ('$dni_escapat', '$password_escapat', 'NO AUTENTICAT', 0, 'CLIENT')";
+            
+            if (!$this->abd->consultaSQL($sql_usuaris)) {
+                throw new Exception("Error al registrar usuari: " . $this->abd->missatgeError());
+            }
+            
+        } catch (Exception $e) {
+            $res = $e->getMessage();
+        }
+
+        $this->abd->desconnectarBD();
+        return $res;
+    }
+    
+    public function inserirDadesClient($DNI, $nom, $address, $tel, $email, $foto = ''){
+        $res = "";
+        $this->abd->connectarBD();
+        
+        try {
+            // Escapar datos para seguridad
+            $dni_escapat = $this->abd->escaparDada($DNI);
+            $nom_escapat = $this->abd->escaparDada($nom);
+            $address_escapat = $this->abd->escaparDada($address);
+            $tel_escapat = $this->abd->escaparDada($tel);
+            $email_escapat = $this->abd->escaparDada($email);
+            $foto_escapat = $this->abd->escaparDada($foto);
+            
+            // SQL INSERT CON fotografia
+            $sql_clients = "INSERT INTO CLIENTS (DNI, nom, adreça, telefon, email, fotografia) VALUES ('$dni_escapat', '$nom_escapat', '$address_escapat', '$tel_escapat', '$email_escapat', '$foto_escapat')";
+            
+            // Ejecutar SQL
+            if (!$this->abd->consultaSQL($sql_clients)) {
+                throw new Exception("Error al registrar dades del client: " . $this->abd->missatgeError());
+            }
+            
+        } catch (Exception $e) {
+            $res = $e->getMessage();
+        }
+
+        $this->abd->desconnectarBD();
+        return $res;
+    }
 }
 ?>

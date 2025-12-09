@@ -9,10 +9,10 @@
         <h1>Registre Usuari</h1>
         <p>Introdueix les teves dades</p>
         
-        <form action="get_register_info.php" method="post">
+        <form action="gestiovista.php" method="post">
             <div>
                 <label for="dni">DNI</label>
-                <input id="dni" size="9" maxlength="9" type="text" name="DNI" required pattern="[0-9]{8}[A-Za-z]">
+                <input id="dni" size="9" maxlength="9" type="text" name="DNI">
             </div>
             
             <div>
@@ -44,7 +44,12 @@
             </div>
             
             <div>
-                <input type="submit" value="Registrar-se">
+                <label for="foto">Foto</label>
+                <input id="foto" type="text" name="foto" autocomplete="foto">
+            </div>
+
+            <div>
+                <input type="submit" name="opcio" value="Registrar-se">
             </div>
         </form>
         
