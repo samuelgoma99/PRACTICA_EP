@@ -44,7 +44,7 @@ class Vista
     }
 
 
-    public function mostrarLlistatHabitacions($llistatHabitacions)
+    public function mostrarLlistatHabitacions($llistatHabitacions, $triar)
     {
         $res = "<table border=1>
                     <tr bgcolor='lightgray'>
@@ -65,10 +65,17 @@ class Vista
                         <td>$codi</td>
                         <td>$tipus</td>
                         <td>$preuNit</td>
-                        <td>$descripcio</td>
-                    </tr>";
-        }
+                        <td>$descripcio</td>";
 
+            if ($triar)
+            {
+                
+                // Cel·la ADDICIONAL dins de la mateixa fila
+                $res .= "<td><input type='radio' name='codi' value='$codi'></td>";
+            }
+
+            $res .= "</tr>";
+        }
         $res .= "</table>";
         echo $res;
     }

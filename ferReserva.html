@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>GESTIÓ DEL HOTEL</title>
+</head>
+<body>
+    <center>
+        <h1>LLISTAT DE LES HABITACIONS DEL HOTEL<br></h1>
+        <h2>SELECCIONA UNA PER RESERVAR</h2>
+        <br>
+
+        <?php
+            include_once("classes/control.php");
+            include_once("classes/vista.php"); 
+            $c = new control();
+            $llistat = $c->llistatHabitacions();
+            $v = new vista();
+            $triar = true;
+
+            // Obrim el formulari
+            echo '<form method="POST" action="classes/control.php?accio=ferReserva">';
+            $v->mostrarLlistatHabitacions($llistat, $triar);
+            echo '<br><input type="submit" value="Seleccionar Habitació">';
+            echo '</form>';
+        ?>
+        <br>
+        <br><a href="index.html">Tornar</a>
+    </center>
+</body>
+</html>

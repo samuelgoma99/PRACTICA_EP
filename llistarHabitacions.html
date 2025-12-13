@@ -16,7 +16,8 @@
             $c = new control();
             $llistat = $c->llistatHabitacions();
             $v = new vista();
-            $v->mostrarLlistatHabitacions ($llistat);
+            $triar = false;
+            $v->mostrarLlistatHabitacions ($llistat, $triar);
         ?>
         <br>
         <br><a href="index.html"> Tornar </a>

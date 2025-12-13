@@ -17,7 +17,9 @@ if (isset($_POST["opcio"]))
 		case "registrarUsuari":
 			include_once("registrarusuari.html");
 			break;
-
+		case "ferReserva":
+			include_once("ferReserva.html");
+			break;
 		default:
 			echo "<br>ERROR: Opció no disponible<br>";
 	}

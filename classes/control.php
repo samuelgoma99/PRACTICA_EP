@@ -39,5 +39,12 @@ class Control
         $res = $s->inserirDadesClient($DNI,$nom,$address, $tel, $email, $foto);
         return($res);
     }
+
+    public function ferReserva($codiHabitacio, $dataInici, $dataFi, $DNIClient){
+        $res = "";
+        $s = new Reserva($codiHabitacio, $dataInici, $dataFi, $DNIClient);
+        $res = $s->ferReserva($codiHabitacio, $dataInici, $dataFi, $DNIClient);
+        return($res);
+    }
 }
 ?>
