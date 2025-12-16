@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>GESTIÓ DEL HOTEL</title>
+</head>
+
+<body>
+    <center>
+        <h1>LLISTAT DE LES RESERVES DIARIES DEL HOTEL<br></h1>
+        <br>
+
+        <form method="post" action="control.php">
+            <?php
+                include_once("classes/control.php");
+                include_once("classes/vista.php");
+                // Mostrar el listado de reservas con opción a seleccionar
+                $v = new vista();
+                $c = new control();
+                $llistat = $c->llistatDiariReserves("RESERVADA");
+                $triar = true;
+                $v->mostrarLlistatReserves($llistat, $triar);
+            ?>
+            <br>
+            <input type="submit" value="Realitzar Check-in">
+        </form>
+
+        <br><br><a href="index.html">Tornar</a>
+    </center>
+</body>
+
+</html>

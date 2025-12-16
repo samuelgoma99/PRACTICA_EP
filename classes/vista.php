@@ -80,6 +80,51 @@ class Vista
         echo $res;
     }
 
+    public function mostrarLlistatReserves($llistatReserves, $triar)
+    {
+        if (empty($llistatReserves)) {
+            echo "<p>No hi ha reserves registrades.</p>";
+            return;
+        }
+
+        $res = "<table border=1>
+                    <tr bgcolor='lightgray'>
+                        <th>numReserva</th>
+                        <th>dniCliente</th>
+                        <th>codiHabitacio</th>
+                        <th>dataEntrada</th>
+                        <th>dataSortida</th>
+                        <th>preuTotal</th>
+                        <th>estat</th>";
+
+        if ($triar) {
+            $res .= "<th>Tria</th>";
+        }
+
+        $res .= "</tr>";
+
+        foreach ($llistatReserves as $reserva)
+        {
+            $res .= "<tr>
+                        <td>" . ($reserva['numReserva'] ?? '') . "</td>
+                        <td>" . ($reserva['dniCliente'] ?? '') . "</td>
+                        <td>" . ($reserva['codiHabitacio'] ?? '') . "</td>
+                        <td>" . ($reserva['dataEntrada'] ?? '') . "</td>
+                        <td>" . ($reserva['dataSortida'] ?? '') . "</td>
+                        <td>" . ($reserva['preuTotal'] ?? '') . "</td>
+                        <td>" . ($reserva['estat'] ?? '') . "</td>";
+            if ($triar)
+            {
+                $res .= "<td><input type='radio' name='reservaSeleccionada' value='" . ($reserva['numReserva'] ?? '') . "'></td>";
+            }
+            $res .= "</tr>";
+        }
+
+        $res .= "</table>";
+        echo $res;
+    }
+
+
 /**************************************************************************************/
 
 }

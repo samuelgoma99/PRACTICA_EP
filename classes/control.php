@@ -4,6 +4,7 @@ header("Content-Type: text/html;charset=utf-8");
 //Classe de CONTROLADOR
 include_once ("habitacio.php");
 include_once ("usuari.php");
+include_once ("reserva.php");
 
 class Control
 {
@@ -42,8 +43,24 @@ class Control
 
     public function ferReserva($codiHabitacio, $dataInici, $dataFi, $DNIClient){
         $res = "";
-        $s = new Reserva($codiHabitacio, $dataInici, $dataFi, $DNIClient);
+        $s = new reserva($codiHabitacio, $dataInici, $dataFi, $DNIClient);
         $res = $s->ferReserva($codiHabitacio, $dataInici, $dataFi, $DNIClient);
+        return($res);
+    }
+
+    public function llistatDiariReserves($estat)
+    {
+        $res = "";
+        $s = new reserva();
+        $res = $s->llistatDiariReserves($estat);
+        return($res);
+    }
+
+    public function checkinReserva($numReserva)
+    {
+        $res = "";
+        $s = new reserva();
+        $res = $s->checkinReserva($numReserva);
         return($res);
     }
 }
